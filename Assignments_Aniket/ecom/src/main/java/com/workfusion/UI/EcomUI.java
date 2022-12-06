@@ -1,7 +1,9 @@
 package com.workfusion.UI;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.workfusion.Exception.*;
 import com.workfusion.serviceImpl.CustomerServiceImpl;
 import com.workfusion.serviceImpl.OrderServiceImpl;
 import com.workfusion.services.CustomerService;
@@ -10,7 +12,7 @@ import com.workfusion.services.OrderService;
 public class EcomUI 
 {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws InvalidPhoneNumberException,InvalidNameException,InvalidPasswordException,InvalidAddressException,ClassNotFoundException, SQLException 
 	{
 		// TODO Auto-generated method stub
 

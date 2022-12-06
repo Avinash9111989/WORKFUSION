@@ -1,11 +1,14 @@
 package com.workfusion.serviceImpl;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.workfusion.Exception.*;
 import com.workfusion.beans.Address;
 import com.workfusion.beans.Customer;
 import com.workfusion.repository.CustomerRepository;
 import com.workfusion.services.CustomerService;
+import Validation.*;
 
 public class CustomerServiceImpl implements CustomerService 
 {
@@ -17,29 +20,68 @@ public class CustomerServiceImpl implements CustomerService
 	CustomerRepository cr = new CustomerRepository(); //CustomerRepository deals the logic part.
 	int opt=0;
 
-	public void addNewCustomer() {
+	public void addNewCustomer() throws ClassNotFoundException, SQLException 
+	{
 		// TODO Auto-generated method stub
 		//Customer details
-		System.out.println("Enter your Name");
-		c.setCustomerName(scanner.next());
-		System.out.println("Enter your Mobile Number");
-		c.setCustomerPhone(scanner.nextLong());
-		//Customer-login details
-		System.out.println("Enter your username");
-		c.setCustomerUsername(scanner.next());
-		System.out.println("Enter your password");
-		c.setCustomerPassword(scanner.next());
-		// Address details
-		System.out.println("Enter street name:");
-		a.setStreet(scanner.next());
-		System.out.println("Enter city name:");
-		a.setCity(scanner.next());
-		System.out.println("Enter  Pin-code:");
-		a.setPinCode(scanner.nextLong());
-		c.setAddress(a);
-		try {
+		
+		try 
+		{
+			System.out.println("Enter your Name");
+			String name = scanner.next();
+			NameValidation inc = new NameValidation();
+			if(inc.isNameCorrect(name))
+				c.setCustomerName(name);
+			else
+				throw new InvalidNameException("Invalid Name!!");
+			System.out.println("Enter your Mobile Number");
+			long phone = scanner.nextLong();
+			PhoneValidation ipc = new PhoneValidation();
+			if(ipc.isPhoneNumberCorrect(phone))
+				c.setCustomerPhone(phone);
+			else
+				throw new InvalidPhoneNumberException("Invalid Phone number!!");
+			//Customer-login details
+			System.out.println("Enter your username");
+			c.setCustomerUsername(scanner.next());
+			System.out.println("Enter your password");
+			String password = scanner.next();
+			PasswordValidation ipwc = new PasswordValidation();
+			if(ipwc.isPasswordCorrect(password))
+				c.setCustomerPassword(password);
+			else
+				throw new InvalidPasswordException("Invalid Password!!");
+			// Address details
+			System.out.println("Enter street name:");
+			a.setStreet(scanner.next());
+			System.out.println("Enter city name:");
+			a.setCity(scanner.next());
+			System.out.println("Enter  Pin-code:");
+			long pin = scanner.nextLong();
+			PinCodeValidation ipcc = new PinCodeValidation();
+			if(ipcc.isPincodeCorrect(pin))
+				a.setPinCode(pin);
+			else
+				throw new InvalidAddressException("Invalid Pin-code!!");
+			c.setAddress(a);
 			cr.addNewCustomer(c); // SQL Query and the logic for Adding the new customer is written in this method.
 			customerLogin();
+		}
+		catch(InvalidNameException e)
+		{
+			e.getMessage();
+		}
+		catch(InvalidPhoneNumberException e)
+		{
+			e.getMessage();
+		}
+		catch(InvalidPasswordException e)
+		{
+			e.getMessage();
+		}
+		catch(InvalidAddressException e)
+		{
+			e.getMessage();
 		}
 		catch (Exception e) 
 		{
@@ -63,10 +105,20 @@ public class CustomerServiceImpl implements CustomerService
 				switch(option)
 				{
 				case 1: System.out.println("Enter the Name:");
-				c.setCustomerName(scanner.next());
+				String name = scanner.next();
+				NameValidation inc = new NameValidation();
+				if(inc.isNameCorrect(name))
+					c.setCustomerName(name);
+				else
+					throw new InvalidNameException("Invalid Name!!");
 				break;
 				case 2:System.out.println("Enter the Phone no.:");
-				c.setCustomerPhone(scanner.nextLong());
+				long phone = scanner.nextLong();
+				PhoneValidation ipc = new PhoneValidation();
+				if(ipc.isPhoneNumberCorrect(phone))
+					c.setCustomerPhone(phone);
+				else
+					throw new InvalidPhoneNumberException("Invalid Phone number!!");
 				break;
 				case 3: System.out.println("Enter the Street:");
 				a.setStreet(scanner.next());
@@ -75,7 +127,12 @@ public class CustomerServiceImpl implements CustomerService
 				a.setCity(scanner.next());
 				break;
 				case 5:System.out.println("Enter the Pin-code:");
-				a.setPinCode(scanner.nextLong());
+				long pin = scanner.nextLong();
+				PinCodeValidation ipcc = new PinCodeValidation();
+				if(ipcc.isPincodeCorrect(pin))
+					a.setPinCode(pin);
+				else
+					throw new InvalidAddressException("Invalid Pin-code!!");
 				break;
 				case 6:
 					flag =false;
@@ -87,6 +144,18 @@ public class CustomerServiceImpl implements CustomerService
 				c.setAddress(a);
 				cr.updateCustomer(c); //SQL Query and the logic for customerUpdate is written in the method of CustomerRepository class.
 			}
+		}
+		catch(InvalidNameException e)
+		{
+			e.getMessage();
+		}
+		catch(InvalidPhoneNumberException e)
+		{
+			e.getMessage();
+		}
+		catch(InvalidAddressException e)
+		{
+			e.getMessage();
 		}
 		catch(Exception e)
 		{

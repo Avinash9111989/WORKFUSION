@@ -1,10 +1,10 @@
 package com.workfusion.Exception;
 
-public class InvalidAddressException extends Exception
+public class InvalidPasswordException extends Exception
 {
 
 	private static final long serialVersionUID = 1L;
-	public InvalidAddressException(String msg)
+	public InvalidPasswordException(String msg)
 	{
 		super(msg);
 	}

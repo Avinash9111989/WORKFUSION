@@ -22,27 +22,14 @@ public class Customer {
 	}
 	public void setCustomerName(String customerName) 
 	{
-		if(customerName !=null && Character.isUpperCase(customerName.charAt(0)))
-		{
-			this.customerName = customerName; // Validation.
-		}
-		else
-		{
-			//throw exception
-		}
+		this.customerName = customerName;
 	}
 	public long getCustomerPhone() {
 		return customerPhone;
 	}
 	public void setCustomerPhone(long customerPhone) 
 	{
-		String str = Long.toString(customerPhone); // Validation
-		if(str.length() == 10 && (str.charAt(0)>5))
-			this.customerPhone = customerPhone;
-		else
-		{
-			//Invalid Phone-Number exception
-		}
+		this.customerPhone = customerPhone;
 	}
 	public String getCustomerUsername() {
 		return customerUsername;

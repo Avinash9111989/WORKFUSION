@@ -22,13 +22,8 @@ public class Address
 	public long getPinCode() {
 		return pinCode;
 	}
-	public void setPinCode(long pinCode) {
-		String str = Long.toString(pinCode);
-		if(str.length() == 6)
-			this.pinCode = pinCode;
-		else
-		{
-			//addressinvalidException
-		}
+	public void setPinCode(long pinCode) 
+	{
+		this.pinCode = pinCode;
 	}
 }
