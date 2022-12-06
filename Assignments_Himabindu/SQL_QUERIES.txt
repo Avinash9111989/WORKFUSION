@@ -1,0 +1,77 @@
+create database learn_online_edu;
+use learn_online_edu;
+CREATE TABLE student(
+studentid varchar(6),
+studentname varchar(40),
+gender char(1),
+city varchar(20),
+PRIMARY KEY(studentid)
+);
+CREATE TABLE course(
+courseid integer,
+coursename varchar(40),
+noofdays integer,
+PRIMARY KEY(courseid)
+);
+CREATE TABLE registration(
+registerid integer,
+studentid varchar(6) references student(studentid),
+courseid integer references course(courseid),
+fee integer,
+regdate date
+);
+INSERT INTO student VALUES('S101','Xavier','M','Chennai');
+INSERT INTO student VALUES('S102','Nancy','F','Hyderabad');
+INSERT INTO student VALUES('S103','John','M','Pune');
+INSERT INTO student VALUES('S104','Isabelle','F','Hyderabad');
+INSERT INTO student VALUES('S105','Rahim','M','Pune');
+INSERT INTO student VALUES('S106','Kevin','M','Chennai');
+
+INSERT INTO course VALUES(906,'Advanced Python',6);
+INSERT INTO course VALUES(905,'Software Engineering',2);
+INSERT INTO course VALUES(904,'Basics of Networking',4);
+INSERT INTO course VALUES(903,'DBMS Basics',3);
+INSERT INTO course VALUES(902,'Cyber Security',5);
+INSERT INTO course VALUES(901,'Introduction to Data Science',5);
+
+INSERT INTO registration VALUES(801,'S102',906,1200,'11-08-17');
+INSERT INTO registration VALUES(802,'S103',901,2500,'14-08-17');
+INSERT INTO registration VALUES(803,'S101',902,3000,'18-06-17');
+INSERT INTO registration VALUES(804,'S102',901,2500,'21-08-17');
+INSERT INTO registration VALUES(805,'S103',903,1000,'04-06-17');
+INSERT INTO registration VALUES(806,'S104',905,1000,'16-08-17');
+SELECT * FROM student;
+SELECT * FROM course;
+SELECT * FROM registration;
+
+
+
+SELECT SUBSTRING(studentid,2,3) AS ID ,studentname,gender FROM student WHERE (studentname LIKE '%i%' OR studentname LIKE '%I%') AND (city='Hyderabad' OR city='Chennai') 
+ORDER BY studentname;
+
+SELECT CONCAT(courseid,'-',coursename) AS COURSEDETAILS FROM course WHERE (LENGTH(coursename) > 12) AND (noofdays>3);												
+
+SELECT studentid, 
+CASE 
+	WHEN fee>2500 THEN 'Class A'
+	WHEN fee>1500 AND fee<2500 THEN 'Class B'
+	ELSE 'Class C'
+END AS CLASS,fee,regdate 
+FROM registration ORDER BY fee ASC, regdate DESC;
+
+SELECT courseid FROM registration 
+WHERE MONTH(regdate)=08 GROUP BY courseid HAVING SUM(fee)>1200;
+
+SELECT courseid FROM registration GROUP BY courseid HAVING AVG(fee)<2500;
+
+SELECT studentid, AVG(fee) AS AVGFEE FROM registration GROUP BY studentid HAVING AVG(fee)<1800 AND COUNT(studentid)>1;
+
+UPDATE course SET noofdays=noofdays+1 WHERE (coursename='Basics of Networking') OR (coursename='Cyber Security');
+SELECT * FROM course;
+
+SELECT s.studentid FROM student AS s 
+WHERE NOT EXISTS (SELECT r.studentid FROM registration AS r WHERE r.studentid = s.studentid);
+
+SELECT ROUND(562.626, 2) AS VALUE1;
+SELECT CEILING(562.626) AS VALUE2;
+SELECT TRUNCATE(562.626, 0) AS VALUE3;
