@@ -1,0 +1,110 @@
+<html>
+    <title>
+        Sign Up
+    </title>
+<body>
+    <style>
+        .red {
+  border: solid 1px red;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+
+}
+form input {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 2px solid #c4c4c4;
+  padding: 0 30px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+button{
+    width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 2px solid #c4c4c4;
+  padding: 0 30px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, );
+    background-color:blue;
+}
+.wrong{
+            border: 2px solid red!important;
+        }
+        .correct{
+            border: 2px solid green!important;
+        }
+    </style>
+    <script type="text/javascript">  
+        function ErrorMessage(){ 
+            var regularExpression  = /^[a-zA-Z0-9!@#$%^&*]{8,}$/; 
+            var mail_format = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+           if(document.getElementById("name").value.length<3 || document.getElementById("name").value.length>25){
+            const list = document.getElementById("name").classList;
+                list.add("wrong");
+            document.getElementById("nameError").innerHTML="username must be between 3 and 25 characters.";
+           
+           }
+           else{
+            const list = document.getElementById("name").classList;
+                list.add("correct");
+           }
+           
+          
+            const list = document.getElementById("email").classList;
+                list.add("correct");
+         
+          
+          
+           if(!regularExpression.test(document.getElementById("pass").value) || document.getElementById("pass").value.length<8 ) {
+            const list = document.getElementById("pass").classList;
+                list.add("wrong");
+            document.getElementById("passError").innerHTML="password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 number,and 1 special character in (!@#$%^&*)";
+       
+    }
+    else{
+            const list = document.getElementById("pass").classList;
+                list.add("correct");
+           }
+
+    if(document.getElementById("confpass").value!=document.getElementById("pass").value){
+        const list = document.getElementById("confpass").classList;
+                list.add("wrong");
+        document.getElementById("confpassError").innerHTML="Please enter the password again";
+       
+    }
+    else{
+            const list = document.getElementById("confpass").classList;
+                list.add("correct");
+           }
+          
+    return false;
+           }
+        </script>          
+    <div align="center" >
+    <form onsubmit=" return ErrorMessage()">
+    <h1>Sign Up</h1><br>
+    <label>Username:</label><br>
+    <input type="text" id="name" placeholder="Enter Username" required/><br>
+    <span style="color:red" id="nameError"></span><br>
+    <label>Email:</label><br>
+    <input type="email" id="email" placeholder="Enter Email" required/><br>
+    <span style="color:red" id="emailError"></span><br>
+    <label>Password:</label><br>
+    <input type="password"  id="pass" placeholder="Enter Password" required/><br>
+    <span style="color:red" id="passError"></span><br>
+    <label>Confirm Password:</label><br>
+    <input type="password" id="confpass" placeholder="Enter Username" required/><br>
+    <span style="color:red" id="confpassError"></span><br>
+    <button type="submit" value="SIGN UP" style="color:white">sign up</button>
+    </form></div>
+</body>
+</html>
